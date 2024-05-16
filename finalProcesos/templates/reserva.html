@@ -72,7 +72,16 @@
                 <div class="card-header">
                     Gestiona tu reserva
                 </div>
-                <form action="{{url_for('home')}}" method="post">
+                <form action="{{url_for('reservas')}}" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Id reserva: </p>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="id_reserva">
+                            </div>
+                        </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -113,7 +122,7 @@
                         </div>
                     
                         <div class="centrarb">
-                            <button type="submit" class="btn btn-primary btn-lg">Realizar Reserva</button>
+                            <button type="submit" class="nav-link" href="{{url_for('reservas')}}" class="btn btn-primary btn-lg">Realizar Reserva</button>
                         </div>
                     </div>
                 </form>
