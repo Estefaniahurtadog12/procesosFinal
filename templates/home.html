@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='home.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /* Estilo para los botones */
+        .square-btn {
+            width: 100%; /* Ajusta el ancho al 100% */
+            height: 150px;
+            padding: 20px;
+            line-height: 150px;
+            border-radius: 20px !important;
+            background: linear-gradient(to bottom right, #2a71fe, #a6ff94);
+            color: white;
+            border: none;
+            font-size: auto;
+            text-align: center;
+            white-space: normal;
+            transition: transform 0.3s; /* Transición suave al agrandar */
+        
+        }
+
+        /* Estilo para hacer los botones responsivos */
+        @media (max-width: 768px) {
+            .square-btn {
+                width: 420px;
+                height: 120px;
+                padding: 15px;
+                line-height: 120px;
+                font-size: auto;
+                
+            }
+        }
+        /* Estilo para agrandar los botones al pasar el mouse */
+        .square-btn:hover {
+            transform: scale(1.05); /* Aumenta el tamaño al 105% */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light ">
+        <a class="navbar-brand" href="">{{usuario}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto topnav">
+                <li class="nav-item active">
+                    <a class="nav-link ho" href="{{url_for('home')}}">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('drones')}}">DRONES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('reservas')}}">RESERVAS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('envios')}}">ENVIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('rutas')}}">RUTAS</a>
+                </li>
+            </ul>
+        </div>            
+    </nav>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{{ url_for('reservas') }}"><button class="btn btn-primary square-btn mb-2">Reservar Pedido</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('envios') }}"><button class="btn btn-primary square-btn mb-2">Envío de Pedidos</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('drones') }}"><button class="btn btn-primary square-btn mb-2">Gestión de Drones</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('rutas') }}"><button class="btn btn-primary square-btn mb-2">Seguimiento de Drones</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('reporte') }}"><button class="btn btn-info square-btn mb-2">Generar Reporte de Usuario</button></a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url_for('reporteReserva') }}"><button class="btn btn-success square-btn mb-2">Generar Botón de Reserva</button></a>
+        </div>
+    </div>
+</div>
+/*aaa*/
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>

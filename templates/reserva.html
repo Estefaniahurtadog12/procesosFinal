@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reserva Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='reserva.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -200px; /* inicialmente oculto */
+            height: 100%;
+            width: 200px;
+            overflow: auto;
+            background-color: #333; /* color de fondo oscuro */
+            color: #fff; /* color de texto claro */
+            transition: left .5s; /* animación al mostrar y ocultar */
+            padding-top: 60px; /* espacio en la parte superior para el botón del menú */
+            z-index: 999; /* Asegurar que el menú esté encima del contenido */
+        }
+        #sidebar.active {
+            left: 0; /* se muestra al agregar la clase active */
+        }
+        /* Estilos para el botón de menú hamburguesa */
+        .navbar-toggler {
+            position: fixed;
+            left: 15px;
+            top: 15px;
+            z-index: 1000; /* Asegurar que el botón esté encima del menú */
+            color: #fff; /* Color blanco */
+        }
+        /* Estilos para el contenido */
+        .container {
+            position: relative; /* Necesario para ajustar el z-index */
+            z-index: 1; /* Asegurar que el contenido esté detrás del menú */
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón de menú hamburguesa -->
+    <div class="navbar-toggler" id="sidebarToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 2.5zM1 7.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5zm-.5 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+    </div>
+
+    <div id="sidebar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link ho" href="{{url_for('home')}}">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('drones')}}">DRONES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('reservas')}}">RESERVAS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('envios')}}">ENVIOS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('rutas')}}">RUTAS</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <!-- Aquí va el contenido de tu página -->
+        <div class="centrar">
+            <div class="card">
+                <div class="card-header">
+                    Gestiona tu reserva
+                </div>
+                <form action="{{url_for('reservas')}}" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Id reserva: </p>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="id_reserva">
+                            </div>
+                        </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Nombre: </p>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nombre">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Pedido: </p>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="pedido">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Lugar: </p>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" aria-label="Default select example" name="lugar">
+                                    <option selected value="0">Entrada Central</option>
+                                    <option value="1">Portería Acacias</option>
+                                    <option value="2">Portería Lago</option>
+                                    <option value="3">Portería Cedro</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="card-text">Motivo: </p>
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="motivo">
+                            </div>
+                        </div>
+                    
+                        <div class="centrarb">
+                            <button type="submit" class="nav-link" href="{{url_for('reservas')}}" class="btn btn-primary btn-lg">Realizar Reserva</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#sidebarToggle').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    </script>
+</body>
+</html>
