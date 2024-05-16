@@ -39,62 +39,109 @@
         .square-btn:hover {
             transform: scale(1.05); /* Aumenta el tamaño al 105% */
         }
+
+        /* Estilos para la barra de navegación lateral */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -200px; /* inicialmente oculto */
+            height: 100%;
+            width: 200px;
+            overflow: auto;
+            background-color: #333; /* color de fondo oscuro */
+            color: #fff; /* color de texto claro */
+            transition: left .5s; /* animación al mostrar y ocultar */
+            padding-top: 60px; /* espacio en la parte superior para el botón del menú */
+            z-index: 999; /* Asegurar que el menú esté encima del contenido */
+        }
+        #sidebar.active {
+            left: 0; /* se muestra al agregar la clase active */
+        }
+        /* Estilos para el botón de menú hamburguesa */
+        .navbar-toggler {
+            position: fixed;
+            left: 15px;
+            top: 15px;
+            z-index: 1000; /* Asegurar que el botón esté encima del menú */
+            color: #fff; /* Color blanco */
+        }
+        /* Estilos para el contenido */
+        .container {
+            position: relative; /* Necesario para ajustar el z-index */
+            z-index: 1; /* Asegurar que el contenido esté detrás del menú */
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light ">
-        <a class="navbar-brand" href="">{{usuario}}</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- Botón de menú hamburguesa -->
+    <div class="navbar-toggler" id="sidebarToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 2.5zM1 7.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5zm-.5 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+    </div>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto topnav">
-                <li class="nav-item active">
-                    <a class="nav-link ho" href="{{url_for('home')}}">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('drones')}}">DRONES</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('reservas')}}">RESERVAS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('envios')}}">ENVIOS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url_for('rutas')}}">RUTAS</a>
-                </li>
-            </ul>
-        </div>            
-    </nav>
-</div>
+    <div id="sidebar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link ho" href="{{url_for('home')}}">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('drones')}}">DRONES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('reservas')}}">RESERVAS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('envios')}}">ENVIOS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('rutas')}}">RUTAS</a>
+            </li>
+        </ul>
+    </div>
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="row">
-        <div class="col-md-6">
-            <a href="{{ url_for('reservas') }}"><button class="btn btn-primary square-btn mb-2">Reservar Pedido</button></a>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ url_for('envios') }}"><button class="btn btn-primary square-btn mb-2">Envío de Pedidos</button></a>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ url_for('drones') }}"><button class="btn btn-primary square-btn mb-2">Gestión de Drones</button></a>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ url_for('rutas') }}"><button class="btn btn-primary square-btn mb-2">Seguimiento de Drones</button></a>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ url_for('reporte') }}"><button class="btn btn-info square-btn mb-2">Generar Reporte de Usuario</button></a>
-        </div>
-        <div class="col-md-6">
-            <a href="{{ url_for('reporteReserva') }}"><button class="btn btn-success square-btn mb-2">Generar Botón de Reserva</button></a>
+    <!-- Contenido de la página -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <a class="navbar-brand" href="">{{usuario}}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>        
+        </nav>
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{{ url_for('reservas') }}"><button class="btn btn-primary square-btn mb-2">Reservar Pedido</button></a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url_for('envios') }}"><button class="btn btn-primary square-btn mb-2">Envío de Pedidos</button></a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url_for('drones') }}"><button class="btn btn-primary square-btn mb-2">Gestión de Drones</button></a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url_for('rutas') }}"><button class="btn btn-primary square-btn mb-2">Seguimiento de Drones</button></a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url_for('reporte') }}"><button class="btn btn-info square-btn mb-2">Generar Reporte de Usuario</button></a>
+            </div>
+            <div class="col-md-6">
+                <a href="{{ url_for('reporteReserva') }}"><button class="btn btn-success square-btn mb-2">Generar Botón de Reserva</button></a>
+            </div>
         </div>
     </div>
-</div>
-/*aaa*/
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+    <!-- Script para la funcionalidad del menú hamburguesa -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#sidebarToggle').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    </script>
+
+    <!-- Script de Bootstrap -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 </body>
 </html>
