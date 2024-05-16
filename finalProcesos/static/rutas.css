@@ -1,0 +1,77 @@
+@media (min-width: 1200px) {
+    .container {
+        max-width: 120000px !important;
+    }
+}
+
+.topnav a:hover {
+    border-bottom: 3px solid red;
+}
+
+.navbar-brand {
+    padding-left: 1rem;
+    font-size: 2rem;
+    text-align: right;
+}
+
+.navbar {
+    font-size: 1.5rem;
+    width: 100%;
+    background-color: #6D6D6D !important;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.ho {
+     color: #2ACDE3 !important;
+}
+
+.container {
+    margin-left: 0 !important;
+    padding-left: 0 !important;  
+    padding-right: 0 !important;
+}
+
+body {
+    background-color: #2E88A5 !important;
+}
+
+.row {
+    padding-top: 5rem;
+    display: flex;
+    margin-right: 0 !important;
+}
+
+.column {
+    flex: 50%;
+    padding-left: 9rem !important;
+}
+
+.card {
+    width: 20rem !important;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.btn {
+    font-weight: bold !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+}
+
+.card-body {
+    font-size: 1.5rem !important;
+}
+
+.card-title {
+    font-size: 2rem !important;
+}
+
+.r1 {
+    padding-top: 0 !important;
+}

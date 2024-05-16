@@ -1,0 +1,32 @@
+body {
+  background-color: #56B0CD !important;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white !important;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white !important;
+  background-color: #3b5998;
+}
+
+.card {
+  background-color: #46B1B8 !important; 
+}
+
+button {
+  border-radius: 25px !important;
+  padding: 1rem !important;
+}
+
+.container {
+  padding-top: 8rem !important;
+}
