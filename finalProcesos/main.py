@@ -1,8 +1,17 @@
 from flask import Flask, url_for, render_template, redirect, request
 import random
+import psycopg2
+import psycopg2.extras
+import pandas as pd
 
 app = Flask(__name__)
 
+DB_HOST = 'database-1.c7wkuk64cpv6.us-east-1.rds.amazonaws.com'
+DB_NAME = 'procesosFinal'
+DB_USER = 'postgres'
+DB_PASS = 'Javeriana1299'
+
+conn = psycopg2.connect(dbname=DB_NAME, user = DB_USER, password = DB_PASS, host = DB_HOST)
 # Información
 dron1 = ["50m", "Juan David Aycardi", 
 		 "5 m/s", "documentos académicos de la facultad de ingeniería"]
@@ -31,6 +40,36 @@ def login():
         texto = "Por favor digite un usuario existente."
         fallo = False
     return render_template("login.html", content = texto)
+
+@app.route('/reporteUsuario/descarga/excel')
+def reporte():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT * FROM usuario")
+    result = cur.fetchall()
+
+    # Crear un DataFrame a partir de los resultados de la consulta
+    df = pd.DataFrame(result, columns=[desc[0] for desc in cur.description])
+
+    # Guardar el DataFrame como un archivo Excel
+    ruta_archivo = "reporte_usuarios.xlsx"
+    df.to_excel(ruta_archivo, index=False)
+
+    return redirect(url_for('static', filename=ruta_archivo))
+
+@app.route('/reporteReserva/descarga/excel')
+def reporteReserva():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT * FROM reserva")
+    result = cur.fetchall()
+
+    # Crear un DataFrame a partir de los resultados de la consulta
+    df = pd.DataFrame(result, columns=[desc[0] for desc in cur.description])
+
+    # Guardar el DataFrame como un archivo Excel
+    ruta_archivo = "reporte_reserva.xlsx"
+    df.to_excel(ruta_archivo, index=False)
+
+    return redirect(url_for('static', filename=ruta_archivo))
 
 # Home
 @app.route("/home", methods = ["GET", "POST"])
