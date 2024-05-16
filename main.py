@@ -3,6 +3,9 @@ import random
 import psycopg2
 import psycopg2.extras
 import pandas as pd
+import boto3
+
+import logging
 
 app = Flask(__name__)
 
@@ -30,6 +33,10 @@ fallo = False
 usuarios = {"messirve": "Luis"}
 contrasenas = {"messirve": "1234"}
 usuario_activo = ""
+s3 = boto3.client('s3',
+                  region_name='us-east-1',
+                  aws_access_key_id='stefania-at-339712777431',
+                  aws_secret_access_key='GAKnVNsDCxeptfBsIEXD8LfrK/lSAveBde8jW7ibfVF0j6cirVqEVgM10Mk=')
 
 # Funciones Principales
 @app.route("/")
@@ -54,7 +61,7 @@ def reporte():
     ruta_archivo = "reporte_usuarios.xlsx"
     df.to_excel(ruta_archivo, index=False)
 
-    return redirect(url_for('static', filename=ruta_archivo))
+    return send_file('reporte_usuarios.xlsx', as_attachment=True)
 
 @app.route('/reporteReserva/descarga/excel')
 def reporteReserva():
@@ -69,7 +76,7 @@ def reporteReserva():
     ruta_archivo = "reporte_reserva.xlsx"
     df.to_excel(ruta_archivo, index=False)
 
-    return redirect(url_for('static', filename=ruta_archivo))
+    return send_file('reporte_reserva.xlsx', as_attachment=True)
 
 # Home
 @app.route("/home", methods = ["GET", "POST"])
@@ -108,7 +115,7 @@ def dron_aumentado2():
 def reservas():
 	return render_template("reserva.html", usuario = usuario_activo)
 
-@app.route("/reservaRegis", methods=["GET","POST"])
+'''@app.route("/reservaRegis", methods=["GET","POST"])
 def registrar_reserva():
     if request.method == "POST":
         # Obtener los datos del formulario enviado por el usuario
@@ -130,7 +137,7 @@ def registrar_reserva():
             mensaje = f"Error al registrar la reserva: {str(e)}"
 
         # Renderizar la plantilla de respuesta
-        return render_template("reservaRegis.html", mensaje=mensaje)
+        return render_template("reservaRegis.html", mensaje=mensaje)'''
 
 
 # Envios
@@ -145,6 +152,32 @@ def envio_aumentado1():
 @app.route("/envios/6969", methods = ["GET", "POST"])
 def envio_aumentado2():
 	return render_template("envio_aumentado.html", usuario = usuario_activo, envio = envio2)
+
+@app.route("/reservaRegis", methods = ["GET", "POST"])
+def reservas1():
+    lugares = { '0': "Entrada Central", '1':"Portería Acacias", '2':"Portería Lago", '3':"Portería Cedro" }
+    if request.method == 'POST':
+        if all(item in request.form for item in ["nombre", "pedido", "lugar", "motivo"]):
+            temp = []
+            temp.append(request.form["nombre"])
+            temp.append(request.form["pedido"])
+            temp.append(lugares[request.form["lugar"]]) 
+            temp.append(request.form["motivo"])
+            print("Pedido realizado: {}".format(temp))
+
+            # Escribe los datos del formulario en un archivo
+            with open('reservas.txt', 'a') as f:
+                f.write(str(temp) + '\n')
+
+            # Carga el archivo en tu bucket de S3
+            try:
+                with open('reservas.txt', 'rb') as data:
+                    s3.upload_fileobj(data, 's3procesos', 'reservas.txt')
+                logging.info('Archivo reservas.txt cargado correctamente en S3')
+            except Exception as e:
+                logging.error('Error al cargar el archivo en S3: {}'.format(e))
+
+    return render_template("reserva.html", usuario = usuario_activo)
 
 # Rutas
 @app.route("/rutas", methods = ["GET", "POST"])
