@@ -36,10 +36,20 @@
             position: relative; /* Necesario para ajustar el z-index */
             z-index: 1; /* Asegurar que el contenido esté detrás del menú */
         }
+        /* Estilos para la tarjeta */
+        .card {
+            width: 50%; /* Ajusta el ancho de la tarjeta */
+            margin: auto; /* Centra la tarjeta en la página */
+        }
     </style>
 </head>
 <body>
-    
+    <!-- Botón de menú hamburguesa -->
+    <div class="navbar-toggler" id="sidebarToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M0 2.5A.5.5 0 0 1 .5 2h15a.5.5 0 0 1 0 1H.5A.5.5 0 0 1 0 2.5zM1 7.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5zm-.5 4a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+    </div>
 
     <div id="sidebar">
         <ul class="navbar-nav">
@@ -78,5 +88,10 @@
 
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#sidebarToggle').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    </script>
 </body>
 </html>
