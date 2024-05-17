@@ -4,8 +4,9 @@ import psycopg2
 import psycopg2.extras
 import pandas as pd
 import boto3
-
 import logging
+import json
+from fpdf import FPDF
 
 app = Flask(__name__)
 
@@ -50,8 +51,8 @@ contrasenas = {"messirve": "1234"}
 usuario_activo = ""
 s3 = boto3.client('s3',
                   region_name='us-east-1',
-                  aws_access_key_id='stefania-at-339712777431',
-                  aws_secret_access_key='GAKnVNsDCxeptfBsIEXD8LfrK/lSAveBde8jW7ibfVF0j6cirVqEVgM10Mk=')
+                  aws_access_key_id='AKIA4MTWIT2NYTZD7YKP',
+                  aws_secret_access_key='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')
 
 # Funciones Principales
 @app.route("/")
@@ -138,10 +139,48 @@ def dron_aumentado4():
 	return render_template("dron_aumentado.html", usuario = usuario_activo, numero = "4",
 												  info = robot2,mant = int4)
 
-# Reservas
 @app.route("/reservas", methods = ["GET", "POST"])
 def reservas():
-	return render_template("reserva.html", usuario = usuario_activo)
+    return render_template("reserva.html", usuario = usuario_activo)
+
+
+@app.route('/reporteServicios/descarga/excel')
+def reporteServicios():
+    # Nombre del bucket y archivo
+    bucket_name = 's3-procesos-20241'
+    file_name = 'reservas.json'
+    pdf_file_name = 'reservas.pdf'
+
+    # Descargar el archivo del bucket S3 a un archivo local
+    s3.download_file(bucket_name, file_name, file_name)
+
+    # Leer el archivo JSON en una lista de diccionarios
+    with open(file_name, 'r') as f:
+        data = [json.loads(line) for line in f]
+
+    # Crear un objeto FPDF
+    pdf = FPDF()
+
+    # Agregar una página
+    pdf.add_page()
+
+    # Establecer la fuente
+    pdf.set_font('Arial', 'B', 12)
+
+    # Agregar cada objeto JSON en la misma página
+    for i, obj in enumerate(data):
+        for key, value in obj.items():
+            pdf.cell(0, 10, f'{key}: {value}', ln=True)
+
+        if i < len(data) - 1:  # No agregar espacios después del último objeto
+            pdf.cell(0, 20, '', ln=True)  # Agregar un espacio en blanco
+
+    # Guardar el PDF
+    pdf.output(pdf_file_name)
+
+    # Enviar el archivo PDF como respuesta
+    return send_file(pdf_file_name, as_attachment=True)
+
 
 @app.route("/reservaRegis", methods=["GET", "POST"])
 def registrar_reserva():
@@ -166,6 +205,26 @@ def registrar_reserva():
         finally:
             cur.close()
 
+        temp = {}
+        temp["id"] = request.form["id"]
+        temp["usuario_id"] = request.form["usuario_id"]
+        temp["altura"] = request.form["altura"]
+        temp["velocidad"] = request.form["velocidad"]
+        temp["descripcion"] = request.form["descripcion"]
+        print("Pedido realizado: {}".format(temp))
+
+        # Escribe los datos del formulario en un archivo
+        with open('reservas.json', 'a') as f:
+            f.write(json.dumps(temp) + '\n')
+
+        # Carga el archivo en tu bucket de S3
+        try:
+            with open('reservas.json', 'rb') as data:
+                s3.upload_fileobj(data, 's3-procesos-20241', 'reservas.json')
+            logging.info('Archivo reservas.json cargado correctamente en S3')
+        except Exception as e:
+            logging.error('Error al cargar el archivo en S3: {}'.format(e))
+        
         # Renderizar la plantilla de respuesta
         return render_template("reserva.html", mensaje=mensaje)
 
@@ -185,32 +244,6 @@ def envio_aumentado1():
 @app.route("/envios/6969", methods = ["GET", "POST"])
 def envio_aumentado2():
 	return render_template("envio_aumentado.html", usuario = usuario_activo, envio = envio2)
-
-'''@app.route("/reservaRegis", methods = ["GET", "POST"])
-def reservas1():
-    lugares = { '0': "Entrada Central", '1':"Portería Acacias", '2':"Portería Lago", '3':"Portería Cedro" }
-    if request.method == 'POST':
-        if all(item in request.form for item in ["nombre", "pedido", "lugar", "motivo"]):
-            temp = []
-            temp.append(request.form["nombre"])
-            temp.append(request.form["pedido"])
-            temp.append(lugares[request.form["lugar"]]) 
-            temp.append(request.form["motivo"])
-            print("Pedido realizado: {}".format(temp))
-
-            # Escribe los datos del formulario en un archivo
-            with open('reservas.txt', 'a') as f:
-                f.write(str(temp) + '\n')
-
-            # Carga el archivo en tu bucket de S3
-            try:
-                with open('reservas.txt', 'rb') as data:
-                    s3.upload_fileobj(data, 's3procesos', 'reservas.txt')
-                logging.info('Archivo reservas.txt cargado correctamente en S3')
-            except Exception as e:
-                logging.error('Error al cargar el archivo en S3: {}'.format(e))
-
-    return render_template("reserva.html", usuario = usuario_activo)'''
 
 # Rutas
 @app.route("/rutas", methods = ["GET", "POST"])
