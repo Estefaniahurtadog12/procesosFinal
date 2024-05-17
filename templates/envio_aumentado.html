@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Envio {{envio[0]}} Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='envio_aumentado.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /* Estilos para la tarjeta */
+        .card {
+            width: 50%; /* Ajusta el ancho de la tarjeta */
+            margin: auto; /* Centra la tarjeta en la página */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <a class="navbar-brand" href="">{{usuario}}</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+    
+    <div class="centrar">
+        <div class="card">
+            <div class="card-header">
+                Envío: {{envio[0]}}
+            </div>
+            <div class="card-body">
+                <p class="card-text">Recibe: {{envio[1]}}</p>
+                <p class="card-text">Pedido: {{envio[2]}}</p>
+                <p class="card-text">Lugar: {{envio[3]}}</p>
+                <p class="card-text">Motivo del envío: {{envio[4]}}</p>
+                <a href="{{url_for('envios')}}" class="btn btn-primary">Volver</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#sidebarToggle').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    </script>
+</body>
+</html>
