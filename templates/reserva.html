@@ -52,7 +52,7 @@
                 <a class="nav-link ho" href="{{url_for('home')}}">HOME</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('drones')}}">DRONES</a>
+                <a class="nav-link" href="{{url_for('drones')}}">INVENTARIO</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{url_for('reservas')}}">RESERVAS</a>
@@ -66,69 +66,62 @@
         </ul>
     </div>
     <div class="container">
-        <!-- Aquí va el contenido de tu página -->
-        <div class="centrar">
-            <div class="card">
-                <div class="card-header">
-                    Gestiona tu reserva
-                </div>
-                <form action="{{url_for('reservas')}}" method="post">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="card-text">Id reserva: </p>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="id_reserva">
-                            </div>
+    <div class="centrar">
+        <div class="card">
+            <div class="card-header">
+                Gestiona tu reserva
+            </div>
+            <form action="{{ url_for('registrar_reserva') }}" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Id reserva:</p>
                         </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <p class="card-text">Nombre: </p>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="nombre">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="card-text">Pedido: </p>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="pedido">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="card-text">Lugar: </p>
-                            </div>
-                            <div class="col">
-                                <select class="form-select" aria-label="Default select example" name="lugar">
-                                    <option selected value="0">Entrada Central</option>
-                                    <option value="1">Portería Acacias</option>
-                                    <option value="2">Portería Lago</option>
-                                    <option value="3">Portería Cedro</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <p class="card-text">Motivo: </p>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="motivo">
-                            </div>
-                        </div>
-                    
-                        <div class="centrarb">
-                            <button type="submit" class="nav-link" href="{{url_for('reservas')}}" class="btn btn-primary btn-lg">Realizar Reserva</button>
+                        <div class="col">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="id">
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Usuario ID:</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="usuario_id">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Altura:</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="altura">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Velocidad:</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="velocidad">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="card-text">Descripción:</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" name="descripcion">
+                        </div>
+                    </div>
+                    <div class="centrarb">
+                        <button type="submit" class="btn btn-primary btn-lg">Realizar Reserva</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
+
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
